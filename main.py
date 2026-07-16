@@ -1,6 +1,6 @@
-from oxygen.gradient import *
-from oxygen.animation import *
-from oxygen.terminal import *
+from ww.ne.gradient import *
+from ww.ne.animation import *
+from ww.ne.terminal import *
 from ww.mg.color import color
 
 print(gradient.rainbow("hello, world"))
