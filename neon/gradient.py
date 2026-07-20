@@ -1,4 +1,4 @@
-from ww.mg.color import color
+from ww.mg.color import Color
 
 
 class gradient:
@@ -24,9 +24,9 @@ class gradient:
             g = gradient._lerp(start[1], end[1], t)
             b = gradient._lerp(start[2], end[2], t)
 
-            out.append(color.rgb(r, g, b) + char)
+            out.append(Color.rgb(r, g, b) + char)
 
-        return "".join(out) + color.reset
+        return "".join(out) + Color.reset
 
     @staticmethod
     def multi(
@@ -58,9 +58,9 @@ class gradient:
             g = gradient._lerp(c1[1], c2[1], local)
             b = gradient._lerp(c1[2], c2[2], local)
 
-            result.append(color.rgb(r, g, b) + char)
+            result.append(Color.rgb(r, g, b) + char)
 
-        return "".join(result) + color.reset
+        return "".join(result) + Color.reset
 
     @staticmethod
     def rainbow(text: str) -> str:
@@ -92,7 +92,7 @@ class gradient:
             b = gradient._lerp(start[2], end[2], t)
 
             result.append(
-                color.rgb(r, g, b) + line + color.reset
+                Color.rgb(r, g, b) + line + Color.reset
             )
 
         return "\n".join(result)

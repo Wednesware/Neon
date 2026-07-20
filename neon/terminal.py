@@ -1,6 +1,6 @@
 import os, random, shutil, subprocess, sys
 
-from ww.mg.color import color
+from ww.mg.color import Color
 
 
 class terminal:
@@ -30,17 +30,17 @@ class terminal:
     @staticmethod
     def random_color() -> str:
         name = random.choice(
-            list(color._CSS_COLORS.keys())
+            list(Color._CSS_COLORS.keys())
         )
 
-        return getattr(color, name)
+        return getattr(Color, name)
 
     @staticmethod
     def colorize_random(text: str) -> str:
         return (
             terminal.random_color()
             + text
-            + color.reset
+            + Color.reset
         )
 
     @staticmethod
