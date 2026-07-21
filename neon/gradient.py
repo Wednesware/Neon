@@ -1,98 +1,92 @@
+from __future__ import annotations
+
+from typing import Iterable
+
 from ww.mg.color import Color
 
+from .palette import ColorLike, palette as get_palette
+from .palette import normalize_colors, parse_color
 
-class gradient:
-    @staticmethod
-    def _lerp(a: int, b: int, t: float) -> int:
-        return int(a + (b - a) * t)
+
+def _lerp(a: int, b: int, t: float) -> int:
+    return int(a + (b - a) * t)
+
+
+def _point_on_gradient(colors: tuple[tuple[int, int, int], ...], t: float) -> tuple[int, int, int]:
+    if len(colors) == 2:
+        a, b = colors
+        return _lerp(a[0], b[0], t), _lerp(a[1], b[1], t), _lerp(a[2], b[2], t)
+
+    span = len(colors) - 1
+    position = t * span
+    segment = min(int(position), span - 1)
+    local_t = position - segment
+    c1 = colors[segment]
+    c2 = colors[segment + 1]
+    return (
+        _lerp(c1[0], c2[0], local_t),
+        _lerp(c1[1], c2[1], local_t),
+        _lerp(c1[2], c2[2], local_t),
+    )
+
+class Gradient:
+    """Static gradient helpers with compatibility aliases for older code."""
 
     @staticmethod
-    def text(
-        text: str,
-        start: tuple[int, int, int],
-        end: tuple[int, int, int],
-    ) -> str:
+    def text(text: str, start: ColorLike, end: ColorLike) -> str:
         if not text:
             return ""
-
-        out = []
-
+        rgb_start = parse_color(start)
+        rgb_end = parse_color(end)
+        out: list[str] = []
         for i, char in enumerate(text):
             t = i / max(len(text) - 1, 1)
-
-            r = gradient._lerp(start[0], end[0], t)
-            g = gradient._lerp(start[1], end[1], t)
-            b = gradient._lerp(start[2], end[2], t)
-
+            r = _lerp(rgb_start[0], rgb_end[0], t)
+            g = _lerp(rgb_start[1], rgb_end[1], t)
+            b = _lerp(rgb_start[2], rgb_end[2], t)
             out.append(Color.rgb(r, g, b) + char)
-
         return "".join(out) + Color.reset
 
     @staticmethod
-    def multi(
-        text: str,
-        *colors: tuple[int, int, int]
-    ) -> str:
-        if len(colors) < 2:
-            raise ValueError("at least 2 colors required")
+    def between(text: str, start: ColorLike, end: ColorLike) -> str:
+        return Gradient.text(text, start, end)
 
-        length = len(text)
-        result = []
-
+    @staticmethod
+    def multi(text: str, *colors: ColorLike) -> str:
+        if not text:
+            return ""
+        normalized = normalize_colors(colors)
+        result: list[str] = []
         for i, char in enumerate(text):
-            p = i / max(length - 1, 1)
-
-            segment = min(
-                int(p * (len(colors) - 1)),
-                len(colors) - 2
-            )
-
-            local = (
-                p * (len(colors) - 1)
-            ) - segment
-
-            c1 = colors[segment]
-            c2 = colors[segment + 1]
-
-            r = gradient._lerp(c1[0], c2[0], local)
-            g = gradient._lerp(c1[1], c2[1], local)
-            b = gradient._lerp(c1[2], c2[2], local)
-
+            p = i / max(len(text) - 1, 1)
+            r, g, b = _point_on_gradient(normalized, p)
             result.append(Color.rgb(r, g, b) + char)
-
         return "".join(result) + Color.reset
 
     @staticmethod
-    def rainbow(text: str) -> str:
-        rainbow_colors = [
-            (255, 0, 0),
-            (255, 127, 0),
-            (255, 255, 0),
-            (0, 255, 0),
-            (0, 0, 255),
-            (75, 0, 130),
-            (148, 0, 211),
-        ]
-
-        return gradient.multi(text, *rainbow_colors)
+    def through(text: str, *colors: ColorLike) -> str:
+        return Gradient.multi(text, *colors)
 
     @staticmethod
-    def vertical(
-        lines: list[str],
-        start: tuple[int, int, int],
-        end: tuple[int, int, int],
-    ) -> str:
-        result = []
+    def palette(text: str, name: str) -> str:
+        return Gradient.multi(text, *get_palette(name).colors)
 
-        for i, line in enumerate(lines):
-            t = i / max(len(lines) - 1, 1)
+    @staticmethod
+    def rainbow(text: str) -> str:
+        return Gradient.palette(text, "rainbow")
 
-            r = gradient._lerp(start[0], end[0], t)
-            g = gradient._lerp(start[1], end[1], t)
-            b = gradient._lerp(start[2], end[2], t)
-
-            result.append(
-                Color.rgb(r, g, b) + line + Color.reset
-            )
-
+    @staticmethod
+    def vertical(lines: Iterable[str], start: ColorLike, end: ColorLike) -> str:
+        all_lines = list(lines)
+        if not all_lines:
+            return ""
+        rgb_start = parse_color(start)
+        rgb_end = parse_color(end)
+        result: list[str] = []
+        for i, line in enumerate(all_lines):
+            t = i / max(len(all_lines) - 1, 1)
+            r = _lerp(rgb_start[0], rgb_end[0], t)
+            g = _lerp(rgb_start[1], rgb_end[1], t)
+            b = _lerp(rgb_start[2], rgb_end[2], t)
+            result.append(Color.rgb(r, g, b) + line + Color.reset)
         return "\n".join(result)
