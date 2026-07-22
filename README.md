@@ -10,12 +10,6 @@ It helps you build CLI output that feels alive:
 - terminal cursor and screen controls
 - utility helpers for structured terminal layouts
 
-Top-level exports are also available:
-
-```python
-from neon import Animation, Gradient, Palette, Terminal, cursor, fps, palette, run, term
-```
-
 ## Installation
 
 Local project usage:
@@ -29,7 +23,7 @@ Import from the 4 modules:
 ```python
 from neon.animation import Animation
 from neon.gradient import Gradient
-from neon.terminal import Terminal, term
+from neon.terminal import Terminal
 from neon.palette import Palette, palette
 ```
 
@@ -39,14 +33,14 @@ from neon.palette import Palette, palette
 import asyncio
 from neon.gradient import Gradient
 from neon.animation import Animation
-from neon.terminal import Terminal, term
+from neon.terminal import Terminal
 
 async def demo():
 	print(Gradient.rainbow("Neon"))
 	print(Gradient.text("Builder syntax", "deep_pink", "cyan"))
 	await Animation.atypewriter("Async typing...")
 	await Animation.afade("Async fade", "#ff4d4d", "#4da6ff")
-	print(term.box("Done", title="Status"))
+	print(Terminal.box("Done", title="Status", style="round"))
 
 asyncio.run(demo())
 ```
@@ -183,7 +177,7 @@ Built-in palettes are exported:
 Lookup by name:
 
 ```python
-from neon.palette import palette
+from neon.palette import palette```
 
 p = palette("sunset")
 print(p.name, p.colors)
@@ -221,7 +215,3 @@ run(Animation.atypewriter, "hello")
 - Best visual results are with terminals that support 24-bit color.
 - Cursor methods write raw ANSI escape sequences; on very old terminals behavior may vary.
 - Sync animation methods internally run async implementations.
-
-## License
-
-See LICENSE.

@@ -241,7 +241,3 @@ class Terminal:
                     commands[char]()
                 except KeyError as exc:
                     raise ValueError("Invalid Terminal.Cursor.perform action") from exc
-
-
-cursor = Terminal.Cursor
-term = Terminal

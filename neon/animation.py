@@ -21,6 +21,8 @@ class Animation:
 
     Async methods are prefixed with 'a' (atypewriter, afade, ...).
     """
+    
+    INFINITE: int = 999_999_999 # A large number to simulate infinite loops.
 
     @staticmethod
     async def atypewriter(text: str, delay: float = 0.03, cursor: str = "") -> None:
@@ -35,7 +37,7 @@ class Animation:
 
     @staticmethod
     def typewriter(text: str, delay: float = 0.03, cursor: str = "") -> None:
-        asyncio.run(Animation.atypewriter(text, delay=delay, cursor=cursor))
+        asyncio.create_task(Animation.atypewriter(text, delay=delay, cursor=cursor))
 
     @staticmethod
     async def apulse(
@@ -43,26 +45,34 @@ class Animation:
         color: ColorLike,
         delay: float = 0.03,
         loops: int = 3,
+        fade_in_frames: int = 20,
+        hold_frames: int = 20,
+        fade_out_frames: int = 20,
+        base_color: ColorLike | None = None,
     ) -> None:
         r, g, b = parse_color(color)
+        end_r, end_g, end_b = parse_color(base_color) if base_color is not None else (0, 0, 0)
         for _ in range(loops):
-            for brightness in range(40, 256, 8):
+            for i in range(fade_in_frames):
+                brightness = int(40 + (255 - 40) * i / max(fade_in_frames - 1, 1))
                 rr = min(255, r * brightness // 255)
                 gg = min(255, g * brightness // 255)
                 bb = min(255, b * brightness // 255)
                 _write_frame(Color.rgb(rr, gg, bb) + text + Color.reset)
                 await asyncio.sleep(delay)
-            for brightness in range(255, 39, -8):
-                rr = min(255, r * brightness // 255)
-                gg = min(255, g * brightness // 255)
-                bb = min(255, b * brightness // 255)
+            await asyncio.sleep(hold_frames * delay)
+            for i in range(fade_out_frames):
+                t = i / max(fade_out_frames - 1, 1)
+                rr = int(r + (end_r - r) * t)
+                gg = int(g + (end_g - g) * t)
+                bb = int(b + (end_b - b) * t)
                 _write_frame(Color.rgb(rr, gg, bb) + text + Color.reset)
                 await asyncio.sleep(delay)
         print()
 
     @staticmethod
-    def pulse(text: str, rgb: ColorLike, delay: float = 0.03, loops: int = 3) -> None:
-        asyncio.run(Animation.apulse(text, rgb, delay=delay, loops=loops))
+    def pulse(text: str, color: ColorLike, delay: float = 0.03, loops: int = 3, end_color: ColorLike | None = None) -> None:
+        asyncio.create_task(Animation.apulse(text, color, delay=delay, loops=loops, end_color=end_color))
 
     @staticmethod
     async def afade(
@@ -91,7 +101,7 @@ class Animation:
         steps: int = 50,
         delay: float = 0.03,
     ) -> None:
-        asyncio.run(Animation.afade(text, start, end, steps=steps, delay=delay))
+        asyncio.create_task(Animation.afade(text, start, end, steps=steps, delay=delay))
 
     @staticmethod
     async def aglitch(text: str, duration: float = 2.0, delay: float = 0.05) -> None:
@@ -104,7 +114,7 @@ class Animation:
 
     @staticmethod
     def glitch(text: str, duration: float = 2.0, delay: float = 0.05) -> None:
-        asyncio.run(Animation.aglitch(text, duration=duration, delay=delay))
+        asyncio.create_task(Animation.aglitch(text, duration=duration, delay=delay))
 
     @staticmethod
     async def arainbow(text: str, delay: float = 0.05, loops: int = 100) -> None:
@@ -127,7 +137,7 @@ class Animation:
 
     @staticmethod
     def rainbow(text: str, delay: float = 0.05, loops: int = 100) -> None:
-        asyncio.run(Animation.arainbow(text, delay=delay, loops=loops))
+        asyncio.create_task(Animation.arainbow(text, delay=delay, loops=loops))
 
     @staticmethod
     async def aspinner(
@@ -158,12 +168,7 @@ class Animation:
         frames: str = "|/-\\",
         color: ColorLike | None = None,
     ) -> None:
-        asyncio.run(Animation.aspinner(text, duration=duration, delay=delay, frames=frames, color=color))
+        asyncio.create_task(Animation.aspinner(text, duration=duration, delay=delay, frames=frames, color=color))
 
 def fps(duration: int = 1, fps: int = 30) -> tuple[int, float]:
     return int(duration * fps), 1 / fps
-
-def run(animation: Callable[..., Awaitable[None]], *args, **kwargs) -> None:
-    """Run an async animation function synchronously."""
-
-    asyncio.run(animation(*args, **kwargs))
