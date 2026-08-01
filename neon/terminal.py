@@ -6,7 +6,7 @@ import shutil
 import sys
 from contextlib import contextmanager
 
-from ww.mg.color import Color
+from ww.mg26_11.color import Color
 
 from .palette import ColorLike, parse_color
 

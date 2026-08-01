@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
-from ww.mg.color import Color
+from ww.mg26_11.color import Color
 
 RGB = tuple[int, int, int]
 ColorLike = RGB | str

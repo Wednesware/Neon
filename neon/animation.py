@@ -6,7 +6,7 @@ import sys
 import time
 from typing import Awaitable, Callable
 
-from ww.mg.color import Color
+from ww.mg26_11.color import Color
 
 from .palette import ColorLike, normalize_colors, parse_color
 from .terminal import Terminal

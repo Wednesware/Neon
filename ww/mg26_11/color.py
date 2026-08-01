@@ -162,8 +162,3 @@ class Color:
 for name, (r, g, b) in Color._CSS_COLORS.items():
     setattr(Color, f"rgb{name}", (r, g, b))
     setattr(Color, name, f"\033[38;2;{r};{g};{b}m")
-
-# Compatibility alias for existing imports that expect `color`.
-color = Color
-
-__all__ = ["Color", "color"]
