@@ -1,6 +1,6 @@
 # Wednesware Neon
 
-This guide usually changes with major releases. Make sure you're reading the version that matches your installed package. Find more versions at https://ne.wednesware.org
+This guide usually changes with major releases. Make sure you're reading the version that matches your installed package.
 
 Wednesware Neon is a terminal presentation toolkit for Python.
 
