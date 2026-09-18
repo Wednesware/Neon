@@ -1,9 +1,7 @@
 from __future__ import annotations
-
 from typing import Iterable
-
-from ww.mg26_11.color import Color
-
+from nitrogen import require
+Color = require("magnesium.color")
 from .palette import ColorLike, palette as get_palette
 from .palette import normalize_colors, parse_color
 

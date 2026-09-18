@@ -1,13 +1,11 @@
 from __future__ import annotations
-
 import asyncio
 import random
 import sys
 import time
 from typing import Awaitable, Callable
-
-from ww.mg26_11.color import Color
-
+from nitrogen import require
+Color = require("magnesium.color")
 from .palette import ColorLike, normalize_colors, parse_color
 from .terminal import Terminal
 

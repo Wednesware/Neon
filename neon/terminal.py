@@ -1,13 +1,11 @@
 from __future__ import annotations
-
 import asyncio
 import random
 import shutil
 import sys
 from contextlib import contextmanager
-
-from ww.mg26_11.color import Color
-
+from nitrogen import require
+Color = require("magnesium.color")
 from .palette import ColorLike, parse_color
 
 

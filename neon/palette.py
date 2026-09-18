@@ -1,13 +1,12 @@
 from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Iterable
+from nitrogen import require
+Color = require("magnesium.color")
 
-from ww.mg26_11.color import Color
 
-RGB = tuple[int, int, int]
+type RGB = tuple[int, int, int]
 ColorLike = RGB | str
-
 
 @dataclass(frozen=True)
 class Palette:
