@@ -1,8 +1,8 @@
 [![Wednesware](wednesware.png)](https://wednesware.org)
 
-# Boron
+# Neon
 
-Boron is a terminal-first styling and animation toolkit for Python. It combines ANSI color helpers, palette parsing, gradients, panel layouts, and animated terminal effects in a compact API intended for CLIs, dashboards, and command-line UIs.
+Neon is a terminal-first styling and animation toolkit for Python. It combines ANSI color helpers, palette parsing, gradients, panel layouts, and animated terminal effects in a compact API intended for CLIs, dashboards, and command-line UIs.
 
 ## Installation
 
