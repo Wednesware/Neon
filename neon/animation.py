@@ -65,8 +65,17 @@ class Animation:
         print()
 
     @staticmethod
-    def pulse(text: str, color: ColorLike, delay: float = 0.03, loops: int = 3, end_color: ColorLike | None = None) -> None:
-        asyncio.run(Animation.apulse(text, color, delay=delay, loops=loops, end_color=end_color))
+    def pulse(
+        text: str,
+        color: ColorLike,
+        delay: float = 0.03,
+        loops: int = 3,
+        fade_in_frames: int = 20,
+        hold_frames: int = 20,
+        fade_out_frames: int = 20,
+        base_color: ColorLike | None = None
+    ) -> None:
+        asyncio.run(Animation.apulse(text, color, delay, loops, fade_in_frames, hold_frames, fade_out_frames, base_color))
 
     @staticmethod
     async def afade(
