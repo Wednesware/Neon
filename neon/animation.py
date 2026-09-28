@@ -55,7 +55,6 @@ class Animation:
                 _write_frame(Color.rgb(rr, gg, bb) + text + Color.reset)
                 time.sleep(delay)
         print()
-
     @staticmethod
     def fade(
         text: str,

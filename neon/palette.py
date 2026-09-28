@@ -31,7 +31,6 @@ def hex_to_rgb(color: str) -> RGB:
         raise ValueError(f"Invalid hex color: {color!r}")
     return tuple(int(hex_value[i : i + 2], 16) for i in (0, 2, 4))  # type: ignore[return-value]
 
-
 def parse_color(value: ColorLike) -> RGB:
     if isinstance(value, tuple):
         if len(value) != 3:
@@ -58,18 +57,15 @@ def parse_color(value: ColorLike) -> RGB:
 
     raise ValueError(f"Unknown color: {value!r}")
 
-
 def to_ansi(color: ColorLike) -> str:
     r, g, b = parse_color(color)
     return Color.rgb(r, g, b)
-
 
 def normalize_colors(colors: list[ColorLike] | tuple[ColorLike, ...]) -> tuple[RGB, ...]:
     normalized = tuple(parse_color(c) for c in colors)
     if len(normalized) < 2:
         raise ValueError("At least 2 colors are required")
     return normalized
-
 
 RAINBOW = Palette(
     "rainbow",
@@ -103,81 +99,12 @@ OCEAN = Palette(
     ),
 )
 
-NITROGEN = Palette(
-    "nitrogen",
-    (
-        (255, 77, 77),
-        (255, 184, 77),
-        (255, 77, 157)
-    ),
-)
-
-LITHIUM = Palette(
-    "lithium",
-    (
-        (0, 225, 255),
-        (0, 140, 255),
-        (77, 225, 255)
-    ),
-)
-
-MAGNESIUM = Palette(
-    "magnesium",
-    (
-        (77, 212, 255),
-        (77, 255, 136),
-        (122, 77, 255)
-    ),
-)
-
-HELIUM = Palette(
-    "helium",
-    (
-        (255, 213, 77),
-        (255, 111, 216),
-        (77, 225, 255)
-    ),
-)
-
-SODIUM = Palette(
-    "sodium",
-    (
-        (0, 255, 21),
-        (13, 70, 11),
-        (156, 255, 126)
-    ),
-)
-
-NEON = Palette(
-    "neon",
-    (
-        (134, 77, 160),
-        (181, 181, 235),
-    ),
-)
-
-OXYGEN = Palette(
-    "oxygen",
-    (
-        (136, 105, 38),
-        (0, 140, 255),
-        (248, 50, 50)
-    ),
-)
-
 PALETTES: dict[str, Palette] = {
     palette.name: palette
     for palette in (
         RAINBOW,
         SUNSET,
-        OCEAN,
-        NITROGEN,
-        LITHIUM,
-        MAGNESIUM,
-        HELIUM,
-        SODIUM,
-        NEON,
-        OXYGEN,
+        OCEAN
     )
 }
 
