@@ -1,8 +1,5 @@
 from __future__ import annotations
-import asyncio
-import random
-import shutil
-import sys
+import asyncio, random, shutil, sys
 from contextlib import contextmanager
 from nitrogen import require
 Color = require("magnesium.color")

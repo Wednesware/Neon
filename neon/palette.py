@@ -1,6 +1,5 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Iterable
 from nitrogen import require
 Color = require("magnesium.color")
 
@@ -65,7 +64,7 @@ def to_ansi(color: ColorLike) -> str:
     return Color.rgb(r, g, b)
 
 
-def normalize_colors(colors: Iterable[ColorLike]) -> tuple[RGB, ...]:
+def normalize_colors(colors: list[ColorLike] | tuple[ColorLike, ...]) -> tuple[RGB, ...]:
     normalized = tuple(parse_color(c) for c in colors)
     if len(normalized) < 2:
         raise ValueError("At least 2 colors are required")

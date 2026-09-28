@@ -1,9 +1,5 @@
 from __future__ import annotations
-import asyncio
-import random
-import sys
-import time
-from typing import Awaitable, Callable
+import asyncio, random, sys, time
 from nitrogen import require
 Color = require("magnesium.color")
 from .palette import ColorLike, normalize_colors, parse_color

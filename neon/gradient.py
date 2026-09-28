@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Iterable
 from nitrogen import require
 Color = require("magnesium.color")
 from .palette import ColorLike, palette as get_palette
@@ -74,7 +73,7 @@ class Gradient:
         return Gradient.palette(text, "rainbow")
 
     @staticmethod
-    def vertical(lines: Iterable[str], start: ColorLike, end: ColorLike) -> str:
+    def vertical(lines: list[str] | tuple[str, ...], start: ColorLike, end: ColorLike) -> str:
         all_lines = list(lines)
         if not all_lines:
             return ""
