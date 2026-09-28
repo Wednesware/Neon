@@ -522,7 +522,7 @@ async def main() -> None:
     await Animation.apulse("Ready", "magenta", loops=2)
 ```
 
-### `neon.animation.Animation.pulse(text, color, delay=0.03, loops=3, end_color=None)`
+### `neon.animation.Animation.pulse(text, color, delay=0.03, loops=3, fade_in_frames=20, hold_frames=20, fade_out_frames=20, base_color=None)`
 
 Starts a pulse animation in the background.
 
