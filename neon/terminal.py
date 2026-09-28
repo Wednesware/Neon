@@ -1,5 +1,5 @@
 from __future__ import annotations
-import asyncio, random, shutil, sys
+import random, shutil, sys, time
 from contextlib import contextmanager
 from nitrogen import require
 Color = require("magnesium.color").Color
@@ -111,18 +111,12 @@ class Terminal:
         print(text)
 
     @staticmethod
-    def write(s: str, flush: bool = False) -> None:
-        sys.stdout.write(s)
-        if flush:
-            sys.stdout.flush()
-
-    @staticmethod
-    async def awrite(s: str, flush: bool = False, delay: float = 0.0) -> None:
+    def write(s: str, flush: bool = False, delay: float = 0.0) -> None:
         sys.stdout.write(s)
         if flush:
             sys.stdout.flush()
         if delay > 0:
-            await asyncio.sleep(delay)
+            time.sleep(delay)
 
     @staticmethod
     def flush() -> None:

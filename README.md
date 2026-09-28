@@ -43,14 +43,10 @@ print(Terminal.panel("System ready", title="Status", style="double"))
 ### Animated terminal output
 
 ```python
-import asyncio
 from neon.animation import Animation
 
-async def main() -> None:
-    await Animation.atypewriter("Loading modules...", delay=0.04, cursor="_")
-    await Animation.afade("Ready", "red", "blue", steps=20, delay=0.05)
-
-asyncio.run(main())
+Animation.typewriter("Loading modules...", delay=0.04, cursor="_")
+Animation.fade("Ready", "red", "blue", steps=20, delay=0.05)
 ```
 
 ## Dependencies
@@ -382,13 +378,12 @@ Writes raw text to stdout.
 Terminal.write("hello", flush=True)
 ```
 
-### `neon.terminal.Terminal.awrite(s, flush=False, delay=0.0)`
+### `neon.terminal.Terminal.write(s, flush=False, delay=0.0)`
 
-Async version of `write()`, with optional sleep delay after writing.
+Writes raw text to stdout and can optionally pause briefly after writing.
 
 ```python
-async def main() -> None:
-    await Terminal.awrite("loading...", flush=True, delay=0.1)
+Terminal.write("loading...", flush=True, delay=0.1)
 ```
 
 ### `neon.terminal.Terminal.flush()`
@@ -486,7 +481,7 @@ The supported movement characters are:
 
 ## `neon.animation`
 
-The animation module contains asynchronous and non-blocking terminal effects for progress, transitions, and motion.
+The animation module contains synchronous terminal effects for progress, transitions, and motion.
 
 ```python
 from neon.animation import Animation, fps
@@ -496,106 +491,52 @@ from neon.animation import Animation, fps
 
 Large integer used as an approximate sentinel for infinite loops.
 
-### `neon.animation.Animation.atypewriter(text, delay=0.03, cursor="")`
+### `neon.animation.Animation.typewriter(text, delay=0.03, cursor="")`
 
 Types text one character at a time, optionally keeping a cursor visible while writing.
 
 ```python
-async def main() -> None:
-    await Animation.atypewriter("Loading...", delay=0.04, cursor="_")
+Animation.typewriter("Loading...", delay=0.04, cursor="_")
 ```
 
-### `neon.animation.Animation.typewriter(text, delay=0.03, cursor="")`
-
-Starts the typewriter animation asynchronously without awaiting it.
-
-```python
-Animation.typewriter("Booting", delay=0.05, cursor="|")
-```
-
-### `neon.animation.Animation.apulse(text, color, delay=0.03, loops=3, fade_in_frames=20, hold_frames=20, fade_out_frames=20, base_color=None)`
+### `neon.animation.Animation.pulse(text, color, delay=0.03, loops=3, fade_in_frames=20, hold_frames=20, fade_out_frames=20, end_color=None)`
 
 Animates a color pulse effect with fade-in and fade-out stages.
 
 ```python
-async def main() -> None:
-    await Animation.apulse("Ready", "magenta", loops=2)
-```
-
-### `neon.animation.Animation.pulse(text, color, delay=0.03, loops=3, end_color=None)`
-
-Starts a pulse animation in the background.
-
-```python
-Animation.pulse("Signal", "cyan", loops=3)
-```
-
-### `neon.animation.Animation.afade(text, start, end, steps=50, delay=0.03)`
-
-Fades a string from one color to another across a fixed number of steps.
-
-```python
-async def main() -> None:
-    await Animation.afade("Hello", "red", "blue", steps=30)
+Animation.pulse("Ready", "magenta", loops=2)
 ```
 
 ### `neon.animation.Animation.fade(text, start, end, steps=50, delay=0.03)`
 
-Starts the fade animation asynchronously.
+Fades a string from one color to another across a fixed number of steps.
 
 ```python
-Animation.fade("Hello", "green", "yellow", steps=25)
-```
-
-### `neon.animation.Animation.aglitch(text, duration=2.0, delay=0.05)`
-
-Generates a glitchy, corrupted version of the text for a short period.
-
-```python
-async def main() -> None:
-    await Animation.aglitch("WARNING", duration=1.5)
+Animation.fade("Hello", "red", "blue", steps=30)
 ```
 
 ### `neon.animation.Animation.glitch(text, duration=2.0, delay=0.05)`
 
-Starts a glitch animation in the background.
+Generates a glitchy, corrupted version of the text for a short period.
 
 ```python
-Animation.glitch("ERROR", duration=1.0)
-```
-
-### `neon.animation.Animation.arainbow(text, delay=0.05, loops=100)`
-
-Cycles the text through a rainbow palette sequence.
-
-```python
-async def main() -> None:
-    await Animation.arainbow("Neon", delay=0.06, loops=30)
+Animation.glitch("WARNING", duration=1.5)
 ```
 
 ### `neon.animation.Animation.rainbow(text, delay=0.05, loops=100)`
 
-Starts a rainbow text animation asynchronously.
+Cycles the text through a rainbow palette sequence.
 
 ```python
-Animation.rainbow("Boron")
-```
-
-### `neon.animation.Animation.aspinner(text, duration=1.5, delay=0.09, frames="|/-\\", color=None)`
-
-Runs a spinner with a message for a given duration, optionally colorizing the spinner itself.
-
-```python
-async def main() -> None:
-    await Animation.aspinner("Syncing", duration=2.0, color="cyan")
+Animation.rainbow("Neon", delay=0.06, loops=30)
 ```
 
 ### `neon.animation.Animation.spinner(text, duration=1.5, delay=0.09, frames="|/-\\", color=None)`
 
-Starts a background spinner without blocking execution.
+Runs a spinner with a message for a given duration, optionally colorizing the spinner itself.
 
 ```python
-Animation.spinner("Loading", duration=2.0, color="magenta")
+Animation.spinner("Syncing", duration=2.0, color="cyan")
 ```
 
 ### `neon.animation.fps(duration=1, fps=30)`
