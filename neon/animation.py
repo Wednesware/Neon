@@ -35,7 +35,7 @@ class Animation:
 
     @staticmethod
     def typewriter(text: str, delay: float = 0.03, cursor: str = "") -> None:
-        asyncio.create_task(Animation.atypewriter(text, delay=delay, cursor=cursor))
+        asyncio.run(Animation.atypewriter(text, delay=delay, cursor=cursor))
 
     @staticmethod
     async def apulse(
@@ -70,7 +70,7 @@ class Animation:
 
     @staticmethod
     def pulse(text: str, color: ColorLike, delay: float = 0.03, loops: int = 3, end_color: ColorLike | None = None) -> None:
-        asyncio.create_task(Animation.apulse(text, color, delay=delay, loops=loops, end_color=end_color))
+        asyncio.run(Animation.apulse(text, color, delay=delay, loops=loops, end_color=end_color))
 
     @staticmethod
     async def afade(
@@ -99,7 +99,7 @@ class Animation:
         steps: int = 50,
         delay: float = 0.03,
     ) -> None:
-        asyncio.create_task(Animation.afade(text, start, end, steps=steps, delay=delay))
+        asyncio.run(Animation.afade(text, start, end, steps=steps, delay=delay))
 
     @staticmethod
     async def aglitch(text: str, duration: float = 2.0, delay: float = 0.05) -> None:
@@ -112,7 +112,7 @@ class Animation:
 
     @staticmethod
     def glitch(text: str, duration: float = 2.0, delay: float = 0.05) -> None:
-        asyncio.create_task(Animation.aglitch(text, duration=duration, delay=delay))
+        asyncio.run(Animation.aglitch(text, duration=duration, delay=delay))
 
     @staticmethod
     async def arainbow(text: str, delay: float = 0.05, loops: int = 100) -> None:
@@ -135,7 +135,7 @@ class Animation:
 
     @staticmethod
     def rainbow(text: str, delay: float = 0.05, loops: int = 100) -> None:
-        asyncio.create_task(Animation.arainbow(text, delay=delay, loops=loops))
+        asyncio.run(Animation.arainbow(text, delay=delay, loops=loops))
 
     @staticmethod
     async def aspinner(
@@ -166,7 +166,7 @@ class Animation:
         frames: str = "|/-\\",
         color: ColorLike | None = None,
     ) -> None:
-        asyncio.create_task(Animation.aspinner(text, duration=duration, delay=delay, frames=frames, color=color))
+        asyncio.run(Animation.aspinner(text, duration=duration, delay=delay, frames=frames, color=color))
 
 def fps(duration: int = 1, fps: int = 30) -> tuple[int, float]:
     return int(duration * fps), 1 / fps
