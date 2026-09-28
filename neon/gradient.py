@@ -1,6 +1,6 @@
 from __future__ import annotations
 from nitrogen import require
-Color = require("magnesium.color")
+Color = require("magnesium.color").Color
 from .palette import ColorLike, palette as get_palette
 from .palette import normalize_colors, parse_color
 

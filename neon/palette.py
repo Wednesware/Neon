@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from nitrogen import require
-Color = require("magnesium.color")
+Color = require("magnesium.color").Color
 
 
 type RGB = tuple[int, int, int]

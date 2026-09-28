@@ -2,7 +2,7 @@ from __future__ import annotations
 import asyncio, random, shutil, sys
 from contextlib import contextmanager
 from nitrogen import require
-Color = require("magnesium.color")
+Color = require("magnesium.color").Color
 from .palette import ColorLike, parse_color
 
 

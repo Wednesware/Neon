@@ -1,7 +1,7 @@
 from __future__ import annotations
 import asyncio, random, sys, time
 from nitrogen import require
-Color = require("magnesium.color")
+Color = require("magnesium.color").Color
 from .palette import ColorLike, normalize_colors, parse_color
 from .terminal import Terminal
 
